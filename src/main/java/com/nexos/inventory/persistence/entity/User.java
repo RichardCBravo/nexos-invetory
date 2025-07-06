@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -24,7 +24,7 @@ public class User {
 
     @Column(name = "entry_date", nullable = false)
     @NotNull(message = "La fecha en ingreso a la compañia en requerida")
-    private LocalDate entryDate;
+    private LocalDateTime entryDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
@@ -39,7 +39,7 @@ public class User {
     public User() {
     }
 
-    public User(String name, Integer age, LocalDate entryDate, Role role) {
+    public User(String name, Integer age, LocalDateTime entryDate, Role role) {
         this.name = name;
         this.age = age;
         this.entryDate = entryDate;
@@ -70,11 +70,11 @@ public class User {
         this.age = age;
     }
 
-    public LocalDate getEntryDate() {
+    public LocalDateTime getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(LocalDate entryDate) {
+    public void setEntryDate(LocalDateTime entryDate) {
         this.entryDate = entryDate;
     }
 
