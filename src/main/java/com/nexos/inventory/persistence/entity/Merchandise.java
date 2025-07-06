@@ -18,7 +18,7 @@ public class Merchandise {
     @NotBlank(message = "El nombre del producto es requerido")
     private String productName;
 
-    @Column(name = "quatity", nullable = false)
+    @Column(name = "quantity", nullable = false)
     @NotNull(message = "La cantidad de productos es requerida")
     private Integer quantity;
 
@@ -28,7 +28,6 @@ public class Merchandise {
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by_user_id", nullable = false)
     private User createdByUser;
@@ -37,6 +36,8 @@ public class Merchandise {
     @JoinColumn(name = "update_by_user_id")
     private User updatedByUser;
 
+    public Merchandise() {
+    }
 
     public Merchandise(String productName, Integer quantity, LocalDateTime entryDate, User createdByUser) {
         this.productName = productName;

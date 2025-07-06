@@ -18,8 +18,8 @@ public class User {
     @NotBlank(message = "El nombre en requerido")
     private String name;
 
-    @Column(name="age", nullable = false)
-    @NotBlank(message = "La edad es requerida")
+    @Column(name = "age", nullable = false)
+    @NotNull(message = "La edad es requerida")
     private Integer age;
 
     @Column(name = "entry_date", nullable = false)
@@ -30,13 +30,14 @@ public class User {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-
     @OneToMany(mappedBy = "createdByUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Merchandise> createdMerchandise;
 
     @OneToMany(mappedBy = "updatedByUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Merchandise> updatedMerchandise;
 
+    public User() {
+    }
 
     public User(String name, Integer age, LocalDate entryDate, Role role) {
         this.name = name;
