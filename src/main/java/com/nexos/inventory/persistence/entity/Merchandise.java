@@ -102,7 +102,7 @@ public class Merchandise {
         this.updatedByUser = updatedByUser;
     }
 
-    @PreUpdate
+    @PrePersist
     public void preUpdate() {
         this.updatedDate = LocalDateTime.now();
     }
