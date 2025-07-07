@@ -36,6 +36,9 @@ export class SearchMerchandiseComponent {
     const params: Params = {};
     if (this.searchForm.value.productName) {
       params['productName'] = this.searchForm.value.productName.trim() || null;
+    }
+
+    if (this.searchForm.value.userId) {
       params['userId'] = this.searchForm.value.userId || null;
     }
 
