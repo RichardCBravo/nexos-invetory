@@ -1,0 +1,21 @@
+<main class="container">
+  <app-register-merchandise
+    [currentMerchandise]="currentMerchandise()"
+    (createMerchandise)="createMerchandise($event)"
+    (updateMerchandise)="updateMerchandise(id() || 0, $event)"
+    class="my-2"
+  />
+  @defer {
+  <app-list-merchandise
+    [listMerchandise]="listMerchandise()"
+    (deleteMerchandise)="deleteMerchandise($event)"
+    class="my-2"
+  />
+  }
+
+  <app-search-merchandise
+    class="my-2"
+    (searchMerchandise)="getMerchandiseSearch()"
+  />
+  <app-list-merchandise [listMerchandise]="searchMerchandise()" class="my-2" />
+</main>

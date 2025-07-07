@@ -1,0 +1,121 @@
+@let currentMerchandiseV = currentMerchandise();
+<div class="card">
+  <div class="card-header">
+    <h2 class="text-primary-emphasis h4">
+      @if (currentMerchandiseV) {
+      {{ "Editar" + currentMerchandiseV.productName || "Nuevo producto" }}
+      } @else { Nuevo producto }
+    </h2>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="form">
+      <div class="mb-3">
+        <label for="disabledTextInput" class="form-label"> ID </label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="ID"
+          formControlName="id"
+          [disabled]="true"
+          readonly
+        />
+      </div>
+      <div class="mb-3">
+        <label for="disabledTextInput" class="form-label">
+          Nombre de producto
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Nombre producto"
+          formControlName="productName"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="disabledTextInput" class="form-label">
+          Cantidad del producto
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Cantidad del producto"
+          formControlName="quantity"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="disabledTextInput" class="form-label">
+          Fecha de registro
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="aaaa-mm-dd"
+          formControlName="entryDate"
+        />
+      </div>
+
+      @if (currentMerchandiseV) {
+      <div class="mb-3">
+        <label for="disabledTextInput" class="form-label">
+          Usuario registro
+        </label>
+        <select
+          id="disabledSelect"
+          class="form-select"
+          formControlName="createdByUser"
+          [disabled]="true"
+        >
+          <option [value]="0">Seleccione un usuario</option>
+          @for (userI of users(); track userI.id) {
+          <option [value]="userI.id">
+            {{ userI.name + " - " + userI.role.name }}
+          </option>
+          }
+        </select>
+      </div>
+      } @if (currentMerchandiseV) {
+      <div class="mb-3">
+        <label for="disabledTextInput" class="form-label">
+          Usuario actualizacion
+        </label>
+        <select
+          id="disabledSelect"
+          class="form-select"
+          formControlName="updatedByUser"
+          [disabled]="true"
+        >
+          <option [value]="0">Seleccione un usuario</option>
+          @for (userI of users(); track userI.id) {
+          <option [value]="userI.id">
+            {{ userI.name + " - " + userI.role.name }}
+          </option>
+          }
+        </select>
+      </div>
+      } @if(!currentMerchandiseV) {
+      <button
+        type="submit"
+        class="btn btn-primary"
+        (click)="onCreateMerchandise()"
+      >
+        Registrar producto
+      </button>
+      } @else {
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" (click)="onResetForm()">
+          Nuevo producto
+        </button>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="onUpdateMerchandise()"
+        >
+          Actualizar producto
+        </button>
+      </div>
+      }
+    </form>
+  </div>
+</div>
