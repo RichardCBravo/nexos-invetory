@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
-//@Validated
 public class UserController {
 
     @Autowired
