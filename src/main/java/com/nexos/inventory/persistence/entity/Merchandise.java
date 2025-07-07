@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,7 +24,7 @@ public class Merchandise {
     private Integer quantity;
 
     @Column(name = "entry_date", nullable = false)
-    private LocalDateTime entryDate;
+    private LocalDate entryDate;
 
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
@@ -39,7 +40,7 @@ public class Merchandise {
     public Merchandise() {
     }
 
-    public Merchandise(String productName, Integer quantity, LocalDateTime entryDate, User createdByUser) {
+    public Merchandise(String productName, Integer quantity, LocalDate entryDate, User createdByUser) {
         this.productName = productName;
         this.quantity = quantity;
         this.entryDate = entryDate;
@@ -70,11 +71,11 @@ public class Merchandise {
         this.quantity = quantity;
     }
 
-    public LocalDateTime getEntryDate() {
+    public LocalDate getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(LocalDateTime entryDate) {
+    public void setEntryDate(LocalDate entryDate) {
         this.entryDate = entryDate;
     }
 

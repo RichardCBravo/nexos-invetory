@@ -11,9 +11,11 @@ import com.nexos.inventory.persistence.entity.User;
 import com.nexos.inventory.persistence.repository.MerchandiseRepository;
 import com.nexos.inventory.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +31,7 @@ public class MerchandiseServiceImpl implements MerchandiseService {
 
     @Override
     public MerchandiseDto createMerchandise(MerchandiseCreateDto createDto) {
-        if (createDto.getEntryDate().isAfter(LocalDateTime.now())) {
+        if (createDto.getEntryDate().isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("La fecha debe ser menos o igual a la actual");
         }
 
@@ -52,33 +54,31 @@ public class MerchandiseServiceImpl implements MerchandiseService {
         return convertMerchandiseToDto(createMerchandise);
     }
 
-     @Override
-     public MerchandiseDto updateMerchandise(Long id, MerchandiseUpdateDto updateDto) {
-     Merchandise merchandise = merchandiseRepository.findById(id).orElseThrow(
-     () -> new IllegalArgumentException("El producto no existe"));
-     if (updateDto.getEntryDate().isAfter(LocalDateTime.now())) {
-     throw new IllegalArgumentException("La fecha debe ser menos o igual a la actual");
-     }
+    @Override
+    public MerchandiseDto updateMerchandise(Long id, MerchandiseUpdateDto updateDto) {
+        Merchandise merchandise = merchandiseRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("El producto no existe"));
+        if (updateDto.getEntryDate().isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("La fecha debe ser menos o igual a la actual");
+        }
 
-     if
-     (merchandiseRepository.existsByProductNameAndIdNot(updateDto.getProductName(),
-     id)) {
-     throw new IllegalArgumentException("El nombre de este producto ya existe");
-     }
+        if (merchandiseRepository.existsByProductNameAndIdNot(updateDto.getProductName(),
+                id)) {
+            throw new IllegalArgumentException("El nombre de este producto ya existe");
+        }
 
-     User user =
-     userRepository.findById(updateDto.getUpdatedByUserId()).orElseThrow(
-     () -> new IllegalArgumentException("El usuario no existe"));
+        User user = userRepository.findById(updateDto.getUpdatedByUserId()).orElseThrow(
+                () -> new IllegalArgumentException("El usuario no existe"));
 
-     merchandise.setProductName(updateDto.getProductName());
-     merchandise.setQuantity(updateDto.getQuantity());
-     merchandise.setEntryDate(updateDto.getEntryDate());
-     merchandise.setUpdatedDate(LocalDateTime.now());
-     merchandise.setUpdatedByUser(user);
+        merchandise.setProductName(updateDto.getProductName());
+        merchandise.setQuantity(updateDto.getQuantity());
+        merchandise.setEntryDate(updateDto.getEntryDate());
+        merchandise.setUpdatedDate(LocalDateTime.now());
+        merchandise.setUpdatedByUser(user);
 
-     Merchandise updateMerchandise = merchandiseRepository.save(merchandise);
-     return convertMerchandiseToDto(updateMerchandise);
-     }
+        Merchandise updateMerchandise = merchandiseRepository.save(merchandise);
+        return convertMerchandiseToDto(updateMerchandise);
+    }
 
     @Override
     public void deleteMerchandise(Long id, Long userId) {
@@ -99,11 +99,23 @@ public class MerchandiseServiceImpl implements MerchandiseService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<MerchandiseDto> getAllMerchandise() {
         return merchandiseRepository.findAll().stream()
                 .map(this::convertMerchandiseToDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<MerchandiseDto> getMerchandiseSearch(String productName, Long userId, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate entryDate) {
+
+        if (productName == null && userId == null && entryDate == null) {
+            throw new IllegalArgumentException("Tiene que enviar por lo menos un filtro");
+        }
+
+        return merchandiseRepository.findBySearch(productName, userId)
+                .stream().map(this::convertMerchandiseToDto).collect(Collectors.toList());
     }
 
     private MerchandiseDto convertMerchandiseToDto(Merchandise merchandise) {

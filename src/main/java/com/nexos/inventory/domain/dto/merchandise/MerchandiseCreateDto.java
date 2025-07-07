@@ -1,10 +1,9 @@
 package com.nexos.inventory.domain.dto.merchandise;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class MerchandiseCreateDto {
 
@@ -15,7 +14,7 @@ public class MerchandiseCreateDto {
     private Integer quantity;
 
     @NotNull(message = "El dia en que el producto se registro es requerido")
-    private LocalDateTime entryDate;
+    private LocalDate entryDate;
 
     @NotNull(message = "El usuario que lo creo es requerido")
     private Long createdByUserId;
@@ -39,11 +38,11 @@ public class MerchandiseCreateDto {
         this.quantity = quantity;
     }
 
-    public LocalDateTime getEntryDate() {
+    public LocalDate getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(LocalDateTime entryDate) {
+    public void setEntryDate(LocalDate entryDate) {
         this.entryDate = entryDate;
     }
 

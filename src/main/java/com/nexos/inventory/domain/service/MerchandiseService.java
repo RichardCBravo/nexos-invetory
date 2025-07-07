@@ -4,6 +4,7 @@ import com.nexos.inventory.domain.dto.merchandise.MerchandiseCreateDto;
 import com.nexos.inventory.domain.dto.merchandise.MerchandiseDto;
 import com.nexos.inventory.domain.dto.merchandise.MerchandiseUpdateDto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface MerchandiseService {
@@ -16,4 +17,5 @@ public interface MerchandiseService {
 
     List<MerchandiseDto> getAllMerchandise();
 
+    List<MerchandiseDto> getMerchandiseSearch(String productName, Long userId, LocalDate entryDate);
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class MerchandiseUpdateDto {
     @NotBlank(message = "El nombre del producto en requerido")
@@ -14,7 +14,7 @@ public class MerchandiseUpdateDto {
     private Integer quantity;
 
     @NotNull(message = "El dia en que el producto se registro es requerido")
-    private LocalDateTime entryDate;
+    private LocalDate entryDate;
 
     @NotNull(message = "El usuario que lo esta actualizando es requerido")
     private Long updatedByUserId;
@@ -38,11 +38,11 @@ public class MerchandiseUpdateDto {
         this.quantity = quantity;
     }
 
-    public LocalDateTime getEntryDate() {
+    public LocalDate getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(LocalDateTime entryDate) {
+    public void setEntryDate(LocalDate entryDate) {
         this.entryDate = entryDate;
     }
 

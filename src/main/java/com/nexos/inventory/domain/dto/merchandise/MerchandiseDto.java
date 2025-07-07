@@ -3,6 +3,7 @@ package com.nexos.inventory.domain.dto.merchandise;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nexos.inventory.domain.dto.user.UserDto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class MerchandiseDto {
@@ -11,7 +12,7 @@ public class MerchandiseDto {
     private Integer quantity;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime entryDate;
+    private LocalDate entryDate;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime updateDate;
 
@@ -45,11 +46,11 @@ public class MerchandiseDto {
         this.quantity = quantity;
     }
 
-    public LocalDateTime getEntryDate() {
+    public LocalDate getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(LocalDateTime entryDate) {
+    public void setEntryDate(LocalDate entryDate) {
         this.entryDate = entryDate;
     }
 

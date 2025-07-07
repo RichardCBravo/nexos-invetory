@@ -5,10 +5,12 @@ import com.nexos.inventory.domain.dto.merchandise.MerchandiseDto;
 import com.nexos.inventory.domain.dto.merchandise.MerchandiseUpdateDto;
 import com.nexos.inventory.domain.service.MerchandiseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -28,6 +30,19 @@ public class MerchandiseController {
     public ResponseEntity<MerchandiseDto> getMerchandiseById(@PathVariable Long id) {
         MerchandiseDto merchandiseDto = merchandiseService.getMerchandiseById(id);
         return ResponseEntity.ok(merchandiseDto);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<MerchandiseDto>> searchMerchandise(
+            @RequestParam(required = false) String productName,
+            @RequestParam(required = false) Long userId,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate entryDate) {
+
+        System.out.println("DATE: " + entryDate);
+        System.out.println("NAME: " + productName);
+        System.out.println("USER: " + userId);
+                List<MerchandiseDto> merchandiseDtos = merchandiseService.getMerchandiseSearch(productName, userId, entryDate);
+                return ResponseEntity.ok(merchandiseDtos);
     }
 
     @PostMapping
